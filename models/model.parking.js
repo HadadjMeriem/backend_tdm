@@ -38,6 +38,27 @@ module.exports = (sequelize, Sequelize) => {
         },
         latitude: {
             type: Sequelize.FLOAT
+        },
+        Sunday: {
+            type: Sequelize.BOOLEAN,
+        },
+        Monday: {
+            type: Sequelize.BOOLEAN
+        },
+        Tuesday: {
+            type: Sequelize.BOOLEAN
+        },
+        Wednesday: {
+            type: Sequelize.BOOLEAN
+        },
+        Thursday: {
+            type: Sequelize.BOOLEAN
+        },
+        Friday: {
+            type: Sequelize.BOOLEAN
+        },
+        Saturday: {
+            type: Sequelize.BOOLEAN
         }
     });
     return Parking;
