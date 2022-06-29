@@ -21,11 +21,16 @@ exports.recuperer_Reservation_ById = (req, res) => {
 exports.getReservationCourante = (req, res) => {
     const today = new Date();
     Reservation.findAll({
+        include: [{ // Notice `include` takes an ARRAY
+            model: Parking
+        }],
+
         where: {
             idUser: req.body.idUser,
             jour: {
                 [Op.gte]: today
             }
+
         }
     }).then(
         data => {
@@ -42,6 +47,9 @@ exports.getReservationCourante = (req, res) => {
 exports.getReservationEffectue = (req, res) => {
     const today = new Date();
     Reservation.findAll({
+        include: [{ // Notice `include` takes an ARRAY
+            model: Parking
+        }],
         where: {
             idUser: req.body.idUser,
             jour: {
