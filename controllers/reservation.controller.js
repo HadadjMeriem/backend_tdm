@@ -18,6 +18,50 @@ exports.recuperer_Reservation_ById = (req, res) => {
         }
     )
 }
+exports.getReservationCourante = (req, res) => {
+    const today = new Date();
+    Reservation.findAll({
+        where: {
+            idUser: req.body.idUser,
+            jour: {
+                [Op.gte]: today
+            }
+        }
+    }).then(
+        data => {
+            if (!data) {
+                return res.status(404).send({ message: "aucune réservation en cours trouvée" })
+
+            }
+            res.status(200).send(data);
+        }
+    ).catch(err => {
+        res.status(500).send({ message: err.message })
+    });
+}
+exports.getReservationEffectue = (req, res) => {
+    const today = new Date();
+    Reservation.findAll({
+        where: {
+            idUser: req.body.idUser,
+            jour: {
+                [Op.lt]: today
+            }
+        }
+    }).then(
+        data => {
+            if (!data) {
+                return res.status(404).send({ message: "aucune réservation en cours trouvée" })
+
+            }
+            res.status(200).send(data);
+        }
+    ).catch(err => {
+        res.status(500).send({ message: err.message })
+    });
+}
+
+
 exports.creer = (req, res) => {
     Parking.findOne({
             where: {

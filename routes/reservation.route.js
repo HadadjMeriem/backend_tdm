@@ -8,8 +8,20 @@ module.exports = function(app) {
         next();
     });
     app.post(
-        "/reservation/creer",
-        controller.creer
-    )
+            "/reservation/creer",
+            controller.creer
+        ),
+        app.post(
+            "/reservation/user",
+            controller.recuperer_Reservation_ById
+        ),
+        app.post(
+            "/reservation/user/effectue",
+            controller.getReservationEffectue
+        ),
+        app.post(
+            "/reservation/user/courante",
+            controller.getReservationCourante
+        )
 
 }
