@@ -5,20 +5,22 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
-        tarif:{
-            type:Sequelize.DOUBLE,
+        tarif: {
+            type: Sequelize.DOUBLE,
         },
-        jour:{
-            type:Sequelize.DATE,
+        jour: {
+            type: Sequelize.DATE,
         },
-        start_at:{
-            type:Sequelize.TIME,
+        codeQR: {
+            type: Sequelize.TEXT('long'),
         },
-
-        end_at :{
-        type:Sequelize.TIME,
+        start_at: {
+            type: Sequelize.TIME,
+        },
+        end_at: {
+            type: Sequelize.TIME,
         }
-       
+
     });
     return Reservation;
 };

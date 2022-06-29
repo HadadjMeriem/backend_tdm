@@ -19,6 +19,7 @@ require('./routes/parking.route')(app);
 require('./routes/inscription.route')(app);
 require('./routes/authentification.route')(app);
 require('./routes/reservation.route')(app);
+require('./routes/qrgenerator.route')(app);
 const initRoutes = require("./routes/parking.route");
 global.__basedir = __dirname;
 app.use(express.urlencoded({ extended: true }));

@@ -3,6 +3,8 @@ const Reservation = db.Reservation;
 const Parking = db.Parking;
 const Op = db.Sequelize.Op;
 const sequelize = db.sequelize;
+const qr = require('qrcode');
+
 exports.recuperer_Reservation_ById = (req, res) => {
 
     Reservation.findAll({
@@ -95,19 +97,40 @@ exports.creer = (req, res) => {
                                 console.log("true1");
                                 if (Date.parse('01/01/2011 ' + req.body.end + ':45') < Date.parse('01/01/2011 ' + parking.HeureFin + ':45')) {
                                     console.log("juste");
-                                    Reservation.create({
-                                        idUser: req.body.idUser,
+                                    data = {
+                                        id: req.body.idUser,
                                         idParking: req.body.idParking,
-                                        tarif: req.body.tarif,
                                         jour: req.body.jour,
-                                        start_at: req.body.start,
-                                        end_at: req.body.end
+                                    }
+                                    let stringdata = JSON.stringify(data)
+                                    let urll
+                                    qr.toString(stringdata, { type: 'terminal' }, function(err, url) {
+                                            if (err) return console.log("error occurred")
 
-                                    }).then(
-                                        reservation => {
-                                            res.status(200).send(reservation);
-                                        }
-                                    )
+                                            console.log(url)
+                                        })
+                                        // Get the base64 url
+                                    qr.toDataURL(stringdata, function(err, url) {
+                                        if (err) return console.log("error occurred")
+                                        urll = url
+                                        console.log(url)
+                                            // res.status(200).send(url)
+                                        Reservation.create({
+                                            idUser: req.body.idUser,
+                                            idParking: req.body.idParking,
+                                            tarif: req.body.tarif,
+                                            jour: req.body.jour,
+                                            codeQR: url,
+                                            start_at: req.body.start,
+                                            end_at: req.body.end
+
+                                        }).then(
+                                            reservation => {
+                                                res.status(200).send(reservation);
+                                            }
+                                        )
+                                    })
+
                                 } else {
                                     res.status(404).send({ message: "le parking est fermé à cet heure" })
                                 }
