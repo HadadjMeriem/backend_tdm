@@ -4,6 +4,7 @@ const Parking = db.Parking;
 const Op = db.Sequelize.Op;
 const sequelize = db.sequelize;
 const qr = require('qrcode');
+const moment = require('moment')
 
 exports.recuperer_Reservation_ById = (req, res) => {
 
@@ -97,6 +98,7 @@ exports.creer = (req, res) => {
                                 console.log("true1");
                                 if (Date.parse('01/01/2011 ' + req.body.end + ':45') < Date.parse('01/01/2011 ' + parking.HeureFin + ':45')) {
                                     console.log("juste");
+                                    parking.nbPlace = parking.nbPlace - 1
                                     data = {
                                         id: req.body.idUser,
                                         idParking: req.body.idParking,
@@ -115,16 +117,22 @@ exports.creer = (req, res) => {
                                         urll = url
                                         console.log(url)
                                             // res.status(200).send(url)
+                                        const startTime = moment(req.body.start + ":00", "HH:mm:ss");
+                                        const endTime = moment(req.body.end + ":00", "HH:mm:ss");
+                                        const duration = moment.duration(endTime.diff(startTime));
+                                        const hours = parseInt(duration.asHours());
                                         Reservation.create({
-                                            idUser: req.body.idUser,
-                                            idParking: req.body.idParking,
-                                            tarif: req.body.tarif,
-                                            jour: req.body.jour,
-                                            codeQR: url,
-                                            start_at: req.body.start,
-                                            end_at: req.body.end
+                                                idUser: req.body.idUser,
+                                                idParking: req.body.idParking,
+                                                tarif: req.body.tarif * hours,
+                                                jour: req.body.jour,
+                                                codeQR: url,
+                                                start_at: req.body.start,
+                                                end_at: req.body.end
 
-                                        }).then(
+                                            }
+
+                                        ).then(
                                             reservation => {
                                                 res.status(200).send(reservation);
                                             }
