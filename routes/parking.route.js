@@ -20,7 +20,7 @@ module.exports = function(app) {
         controller.getParkingById
     );
     app.post(
-        "parking/rechercheAvancee",
+        "/parking/rechercheAvancee",
         controller.recherche
     )
 }
