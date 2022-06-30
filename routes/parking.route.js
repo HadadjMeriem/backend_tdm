@@ -18,5 +18,9 @@ module.exports = function(app) {
     app.post(
         "/parking/getParking",
         controller.getParkingById
+    );
+    app.post(
+        "parking/rechercheAvancee",
+        controller.recherche
     )
 }
