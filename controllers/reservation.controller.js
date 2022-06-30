@@ -124,7 +124,7 @@ exports.creer = (req, res) => {
                                         Reservation.create({
                                                 idUser: req.body.idUser,
                                                 idParking: req.body.idParking,
-                                                tarif: req.body.tarif * hours,
+                                                tarif: parking.tarifHoraire * hours,
                                                 jour: req.body.jour,
                                                 codeQR: url,
                                                 start_at: req.body.start,
